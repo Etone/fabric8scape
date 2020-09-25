@@ -1,7 +1,7 @@
-package de.novatec.fabric8scape.admin.controller;
+package info.novatec.fabric8scape.admin.controller;
 
-import de.novatec.fabric8scape.admin.entity.DataPool;
-import de.novatec.fabric8scape.admin.service.CrudService;
+import info.novatec.fabric8scape.admin.entity.DataPool;
+import info.novatec.fabric8scape.admin.service.CrudService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class CrudController {
 
   CrudService crudService;
-
 
   @GetMapping("/")
   public Iterable<DataPool> getDataPools() {
@@ -34,8 +33,8 @@ public class CrudController {
   }
 
   @DeleteMapping("/{id}")
-  public DataPool deleteDataPool(@PathVariable("id") int id){
+  public void deleteDataPool(@PathVariable("id") int id){
     log.info("DELETE Request, deleting DataPool with id {} form database", id);
-    return crudService.deleteDataPool(id);
+    crudService.deleteDataPool(id);
   }
 }

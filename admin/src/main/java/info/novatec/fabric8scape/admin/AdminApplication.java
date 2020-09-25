@@ -1,4 +1,4 @@
-package de.novatec.fabric8scape.admin;
+package info.novatec.fabric8scape.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
