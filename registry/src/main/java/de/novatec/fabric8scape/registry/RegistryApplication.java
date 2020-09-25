@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RegsitryApplication {
+public class RegistryApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RegsitryApplication.class, args);
+		SpringApplication.run(RegistryApplication.class, args);
 	}
 
 }
