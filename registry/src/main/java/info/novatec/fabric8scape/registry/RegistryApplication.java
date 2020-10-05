@@ -1,4 +1,4 @@
-package de.novatec.fabric8scape.registry;
+package info.novatec.fabric8scape.registry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
