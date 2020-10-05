@@ -2,13 +2,12 @@ package info.novatec.fabric8scape.admin.entity;
 
 import info.novatec.fabric8scape.admin.entity.type.Creator;
 import info.novatec.fabric8scape.admin.entity.type.Image;
-import java.io.Serializable;
 import javax.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-public class DataPool implements Serializable {
+public class DataPool {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   Integer id;
