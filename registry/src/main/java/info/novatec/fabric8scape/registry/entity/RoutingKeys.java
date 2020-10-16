@@ -1,4 +1,4 @@
-package de.novatec.fabric8scape.registry.entity;
+package info.novatec.fabric8scape.registry.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

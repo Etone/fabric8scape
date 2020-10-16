@@ -5,6 +5,7 @@ import info.novatec.fabric8scape.admin.entity.RoutingKeys;
 import info.novatec.fabric8scape.admin.exception.DataPoolNotFoundException;
 import info.novatec.fabric8scape.admin.repository.DataPoolRepository;
 import info.novatec.fabric8scape.admin.service.DataPoolService;
+
 import info.novatec.fabric8scape.admin.service.MessageService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,6 @@ public class DataPoolServiceImpl implements DataPoolService {
 
   DataPoolRepository repository;
   MessageService messageService;
-
-
 
   public DataPool createNewDataPool(DataPool newPool){
     var pool = repository.save(newPool);
