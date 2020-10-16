@@ -11,7 +11,7 @@ public class MessageServiceImpl implements MessageService {
 
   RabbitMessagingTemplate messagingTemplate;
 
-  private static final String EXCHANGE_KEY = "";
+  private static final String EXCHANGE_KEY = "POOL";
 
   public void sendMessage(String routingKey, Object body) {
     messagingTemplate.convertAndSend(EXCHANGE_KEY, routingKey, body);
