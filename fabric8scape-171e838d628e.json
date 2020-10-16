@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fabric8scape",
+  "private_key_id": "171e838d628ee3ffdac6cb4dd6bb7d129468aeee",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCZ2QxVF94zPaAC\n5EFn2LIjOkDBZCS2namGmFV7T3nFwPEAhOTaRCsK+zRyQ909QHbegJph84EtvFhu\ntRvBJzbCl73UCac1NZh9PuFsj1RDJxv5c47WQyDYUs41K6rPmytD4dOc3W54lE02\nU9uMillbFs0Lhd1nQCnoTgvr3p8CwPecFrPP34oIFa5MTRfP065joIY8keEuwF/a\nVS80owm17tFPzIutSwk+tBpxDfcI9JH5phGY3t8IiCRk62zfBAH2GbNKm5mvrGkU\nJtmR96Cei5QLrrNwrxOCjfrMWZ2pJuoL6E0y5NzEMqtG0Du0QhUdPPqJXMNOnCs1\nGQKe5hmPAgMBAAECggEAAjkbr4MXx9/FFyWbOFfuQwoNc33x9d2TXImI+q4sUUo3\ncU16TRkdEhyNJnWKld7/mLl9AZtWK4YENR1S2FirtuYgbRbynpc2q+Cju0Da89l1\n0wXzc28m41lW93e5ESTp3CJAP40HkqB5+SX/DynUnrdWoSr/BwXrVRsDmxXtcEm5\nzfMTzyknGUVC99pPe59oNOskdYttzB5+J77LkKgHNAYt9TajM75ivMo2Sdn6a8WW\njH5F7LHAaH9B07S73mfplbFFNdnPX6J5LG6YzoDPhNHqpv+fyIbGw9Yn3WrjCzZn\nEkM6uWmDdGH1Fdf3w1YyD9z0yJIWfAYzd+9pecaaUQKBgQDHcNyLXm3ml0nqMVQ9\noh9nYwXknvnlePFsJbauz7iQOvrZT57vv17SG0oK7x9zYyLUBeCLKdcGURUP47U2\noU4ZK+77H1ok0hCAGtVMKRa5ro9912HCMMsOm8aEm7e20tWTEhLXCKZyYHrY1wur\nRPBrwmbKSarTQAbIXoyCrQ/D9wKBgQDFejHX0js7hT5R/w2TpCMoXgr8QoYMl7lA\nagWuxLjFss6rHxrYG/1i4kdv/0qfSefSeaG6nZ1PUrU5AkbRGdDx0TwL8AxpZEX/\nb8izxOSuRL/yRhFCTpt+HN21j9rQ6e5Svb1n7z+IbIcJXelvX2GAyjTmCWThKJ62\n34B+itJBKQKBgQCcug9GIl3BAJCgTkWB7Z46E7H02A1PC/zEXNqzgx7pkL/B9/TR\nOJTeDX3hG8qeVYBwF3I+ShHkr+EaTHoCRT5nP4QcqaWgG8fFs9B8eimWnxu564Cy\nJr/bagTV/ryfGg2l9mUBwJV0embvcgaEf7djJzC5tKxeOAlcehh3NGKYPwKBgCSJ\nzXsfXPJQXw2Q4ZQ1xIONkv7F2EOwNwiiFVcW8xExWmfzI2ZlF2cacxlX5Ri/9fLN\nqoz66MZqiTl5IF1EJ5L2oeObkNBXS1RN/Ja2kZFlCxbqu/rGzKJy+NrFOTl6byxE\nCy2V6O13Fy02gSCoR0QrJcqCZnX6rBMuG3pOeUSxAoGBAKKu+I+6YOemVVeMmOqm\nUV5a8MN/Ch37G+xL7sAh47Fe3sRZ4vH8Cl5PWo1A+wQ9LiFWNJcM79KANhQOJTeT\n11/osikthMgqNW+ovDag1ZahQJXgLSiJ1pKaI7M6lD1OpH6KlF2OtjxDEGpnhpgh\nS/fNHfrLjKA0CCWJYnIRhRIM\n-----END PRIVATE KEY-----\n",
+  "client_email": "database@fabric8scape.iam.gserviceaccount.com",
+  "client_id": "100499424717628896613",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/database%40fabric8scape.iam.gserviceaccount.com"
+}
