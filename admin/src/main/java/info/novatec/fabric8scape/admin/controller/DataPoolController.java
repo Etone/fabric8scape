@@ -1,40 +1,40 @@
 package info.novatec.fabric8scape.admin.controller;
 
 import info.novatec.fabric8scape.admin.entity.DataPool;
-import info.novatec.fabric8scape.admin.service.CrudService;
+import info.novatec.fabric8scape.admin.service.DataPoolService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/crud")
+@RequestMapping("/datapool")
 @AllArgsConstructor
 @Slf4j
-public class CrudController {
+public class DataPoolController {
 
-  CrudService crudService;
+  DataPoolService dataPoolService;
 
   @GetMapping("/")
   public Iterable<DataPool> getDataPools() {
     log.info("GET Request, listing all DataPools in Database");
-    return crudService.getDataPools();
+    return dataPoolService.getDataPools();
   }
 
   @GetMapping("/{id}")
   public DataPool getDataPool(@PathVariable("id") int id) {
     log.info("GET Request, listing DataPool with id {}", id);
-    return crudService.getDataPool(id);
+    return dataPoolService.getDataPool(id);
   }
 
   @PutMapping("/")
   public DataPool createNewPool(@RequestBody DataPool newPool){
     log.info("PUT Request, creating new DataPool {}", newPool);
-    return crudService.createNewDataPool(newPool);
+    return dataPoolService.createNewDataPool(newPool);
   }
 
   @DeleteMapping("/{id}")
   public void deleteDataPool(@PathVariable("id") int id){
     log.info("DELETE Request, deleting DataPool with id {} form database", id);
-    crudService.deleteDataPool(id);
+    dataPoolService.deleteDataPool(id);
   }
 }
