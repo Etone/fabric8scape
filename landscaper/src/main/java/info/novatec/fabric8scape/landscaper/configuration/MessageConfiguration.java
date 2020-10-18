@@ -3,6 +3,7 @@ package info.novatec.fabric8scape.landscaper.configuration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import info.novatec.fabric8scape.landscaper.entity.DataPool;
+import info.novatec.fabric8scape.landscaper.service.DataPoolService;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,14 +18,14 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class MessageConfiguration {
 
-  private static final String CREATE_QUEUE_NAME = "create";
-  private static final String DELETE_QUEUE_NAME = "delete";
-  private static final String DEPLOY_QUEUE_NAME = "deploy";
-  private static final String UNDEPLOY_QUEUE_NAME = "undeploy";
+  private static final String QUEUE_PREFIX = "landscaper";
 
+  private static final String CREATE_QUEUE_NAME = QUEUE_PREFIX + ".create";
+  private static final String DELETE_QUEUE_NAME = QUEUE_PREFIX + ".delete";
+  private static final String DEPLOY_QUEUE_NAME = QUEUE_PREFIX + ".deploy";
+  private static final String UNDEPLOY_QUEUE_NAME = QUEUE_PREFIX + ".undeploy";
 
-  private static final String EXCHANGE_NAME_POOL = "POOL";
-  private static final String EXCHANGE_NAME_K8S = "KUBERNETES";
+  private final DataPoolService dataPoolService;
 
 
   @Bean
@@ -49,12 +50,12 @@ public class MessageConfiguration {
 
   @Bean
   public Exchange exchangePool() {
-    return new DirectExchange(EXCHANGE_NAME_POOL, true, false);
+    return new DirectExchange(ExchangeKey.POOL.getValue(), true, false);
   }
 
   @Bean
   public Exchange exchangeKubernetes() {
-    return new DirectExchange(EXCHANGE_NAME_K8S, true, false);
+    return new DirectExchange(ExchangeKey.KUBERNETES.getValue(), true, false);
   }
 
   @Bean
@@ -80,6 +81,12 @@ public class MessageConfiguration {
     log.info("Received CREATE Event with body: {}", body);
 
     var pool = deserializeMessage(body);
+    pool.ifPresent(
+        dataPool -> {
+          log.info("Pool {} deserialized, writing in DB", dataPool);
+          dataPoolService.writeDataPool(dataPool);
+        }
+    );
   }
 
   @RabbitListener(queues = {DELETE_QUEUE_NAME})
@@ -92,7 +99,6 @@ public class MessageConfiguration {
   private static Optional<DataPool> deserializeMessage(String message) {
     try {
       var pool = new ObjectMapper().readValue(message, DataPool.class);
-      log.info("Deserialized DataPool: {}", pool);
       return Optional.of(pool);
     } catch (JsonProcessingException e) {
       log.error("Could not deserialize message {}. Exception: {}", message, e.getMessage());

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RoutingKeys {
+public enum RoutingKey {
     CREATE("pool.create"),
     DELETE("pool.delete");
 

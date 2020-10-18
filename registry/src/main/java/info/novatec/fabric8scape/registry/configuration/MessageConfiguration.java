@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MessageConfiguration {
 
-  private static final String CREATE_QUEUE_NAME = "create";
-  private static final String DELETE_QUEUE_NAME = "delete";
+  private static final String QUEUE_PREFIX = "registry";
+
+  private static final String CREATE_QUEUE_NAME = QUEUE_PREFIX + ".create";
+  private static final String DELETE_QUEUE_NAME = QUEUE_PREFIX + ".delete";
 
   private static final String EXCHANGE_NAME = "POOL";
 
@@ -66,7 +68,7 @@ public class MessageConfiguration {
   }
 
   @RabbitListener(queues = DELETE_QUEUE_NAME)
-  public void receiveDeleteMessage(Integer body){
+  public void receiveDeleteMessage(Object body){
     log.info("Received DELETE event with body: {}", body);
   }
 
