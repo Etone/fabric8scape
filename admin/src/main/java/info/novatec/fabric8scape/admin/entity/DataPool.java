@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "data_pool_admin")
 public class DataPool implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
