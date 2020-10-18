@@ -92,6 +92,7 @@ public class MessageConfiguration {
   private static Optional<DataPool> deserializeMessage(String message) {
     try {
       var pool = new ObjectMapper().readValue(message, DataPool.class);
+      log.info("Deserialized DataPool: {}", pool);
       return Optional.of(pool);
     } catch (JsonProcessingException e) {
       log.error("Could not deserialize message {}. Exception: {}", message, e.getMessage());
