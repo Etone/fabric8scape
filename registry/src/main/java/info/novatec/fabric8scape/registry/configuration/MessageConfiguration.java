@@ -5,25 +5,27 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import info.novatec.fabric8scape.registry.entity.DataPool;
 import info.novatec.fabric8scape.registry.entity.RoutingKeys;
+import info.novatec.fabric8scape.registry.service.DataPoolService;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class MessageConfiguration {
 
   private static final String CREATE_QUEUE_NAME = "create";
   private static final String DELETE_QUEUE_NAME = "delete";
 
   private static final String EXCHANGE_NAME = "POOL";
+
+  private final DataPoolService dataPoolService;
 
   @Bean
   public Queue queueCreate(){
@@ -50,19 +52,23 @@ public class MessageConfiguration {
   }
 
   @RabbitListener(queues = CREATE_QUEUE_NAME)
-  public static void receiveCreateMessage(String body) {
+  public void receiveCreateMessage(String body) {
     log.info("Received CREATE Event with body: {}", body);
 
     var pool = deserializeMessage(body);
 
     pool.ifPresent(
+        (dataPool) -> {
         //call Service to enter in DB
-        (dataPool) -> log.info("Deserialized DataPool: {}", dataPool));
+         log.info("Deserialized DataPool: {}", dataPool);
+         dataPoolService.writePoolInDataBase(dataPool);
+        }
+    );
 
   }
 
   @RabbitListener(queues = DELETE_QUEUE_NAME)
-  public static void receiveDeleteMessage(Integer body){
+  public void receiveDeleteMessage(Integer body){
     log.info("Received DELETE event with body: {}", body);
   }
 
