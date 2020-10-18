@@ -33,4 +33,10 @@ public class DataPoolServiceImpl implements DataPoolService {
   public Iterable<DataPool> filterByCreator(Iterable<Creator> creators) {
     return repository.findByCreatorIn(creators);
   }
+
+  @Override
+  public void deleteDataPool(Integer id) {
+    log.info("Delete Pool with id: {}" , id);
+    repository.deleteById(id);
+  }
 }

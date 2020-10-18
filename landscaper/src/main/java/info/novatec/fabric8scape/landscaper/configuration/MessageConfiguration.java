@@ -86,6 +86,7 @@ public class MessageConfiguration {
   @RabbitListener(queues = { "landscaper.delete" })
   public void receiveDeleteMessage(String body){
     log.info("Received DELETE event with body: {}", body);
+    dataPoolService.deleteDataPool(Integer.parseInt(body));
   }
 
 

@@ -16,6 +16,15 @@ public class DataPoolServiceImpl implements DataPoolService {
 
   @Override
   public void writeDataPool(DataPool pool) {
+    log.info("Writing new Pool {} into db", pool);
     repository.save(pool);
   }
+
+  @Override
+  public void deleteDataPool(Integer id) {
+    log.info("Deleting pool with id: {}", id);
+    repository.deleteById(id);
+  }
+
+
 }
