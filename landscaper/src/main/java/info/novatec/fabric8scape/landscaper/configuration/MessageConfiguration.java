@@ -2,6 +2,7 @@ package info.novatec.fabric8scape.landscaper.configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.xml.bind.v2.model.core.EnumConstant;
 import info.novatec.fabric8scape.landscaper.entity.DataPool;
 import info.novatec.fabric8scape.landscaper.service.DataPoolService;
 import java.util.Optional;
@@ -18,34 +19,27 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class MessageConfiguration {
 
-  private static final String QUEUE_PREFIX = "landscaper";
-
-  private static final String CREATE_QUEUE_NAME = QUEUE_PREFIX + ".create";
-  private static final String DELETE_QUEUE_NAME = QUEUE_PREFIX + ".delete";
-  private static final String DEPLOY_QUEUE_NAME = QUEUE_PREFIX + ".deploy";
-  private static final String UNDEPLOY_QUEUE_NAME = QUEUE_PREFIX + ".undeploy";
-
   private final DataPoolService dataPoolService;
 
 
   @Bean
   public Queue queueCreate(){
-    return new Queue(CREATE_QUEUE_NAME, true);
+    return new Queue(QueueKey.CREATE.getValue(), true);
   }
 
   @Bean
   public Queue queueDelete(){
-    return new Queue(DELETE_QUEUE_NAME, true);
+    return new Queue(QueueKey.DELETE.getValue(), true);
   }
 
   @Bean
   public Queue queueDeploy(){
-    return new Queue(DEPLOY_QUEUE_NAME, true);
+    return new Queue(QueueKey.DEPLOY.getValue(), true);
   }
 
   @Bean
   public Queue queueUndeploy(){
-    return new Queue(UNDEPLOY_QUEUE_NAME, true);
+    return new Queue(QueueKey.UNDEPLOY.getValue(), true);
   }
 
   @Bean
@@ -76,7 +70,7 @@ public class MessageConfiguration {
     return BindingBuilder.bind(queue).to(exchange).with(RoutingKeys.UNDEPLOY.getValue()).noargs();
   }
 
-  @RabbitListener(queues = {CREATE_QUEUE_NAME})
+  @RabbitListener(queues = { "landscaper.create" })
   public void receiveCreateMessage(String body) {
     log.info("Received CREATE Event with body: {}", body);
 
@@ -89,8 +83,8 @@ public class MessageConfiguration {
     );
   }
 
-  @RabbitListener(queues = {DELETE_QUEUE_NAME})
-  public void receiveDeleteMessage(Integer body){
+  @RabbitListener(queues = { "landscaper.delete" })
+  public void receiveDeleteMessage(String body){
     log.info("Received DELETE event with body: {}", body);
   }
 

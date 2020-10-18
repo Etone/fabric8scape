@@ -68,7 +68,7 @@ public class MessageConfiguration {
   }
 
   @RabbitListener(queues = DELETE_QUEUE_NAME)
-  public void receiveDeleteMessage(Object body){
+  public void receiveDeleteMessage(String body){
     log.info("Received DELETE event with body: {}", body);
   }
 
