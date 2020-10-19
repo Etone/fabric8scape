@@ -1,7 +1,6 @@
-package info.novatec.fabric8scape.registry.entity;
+package info.novatec.fabric8scape.landscaper.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import info.novatec.fabric8scape.registry.entity.type.Creator;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,17 +10,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Table(name = "data_pool_registry")
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name= "data_pool_landscaper")
 public class DataPool {
 
   @Id
   Integer id;
 
   @Embedded
-  Creator creator;
+  Image image;
 
 }

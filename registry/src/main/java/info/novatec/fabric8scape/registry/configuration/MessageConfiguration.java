@@ -1,10 +1,8 @@
 package info.novatec.fabric8scape.registry.configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import info.novatec.fabric8scape.registry.entity.DataPool;
-import info.novatec.fabric8scape.registry.entity.RoutingKeys;
 import info.novatec.fabric8scape.registry.service.DataPoolService;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -20,8 +18,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MessageConfiguration {
 
-  private static final String CREATE_QUEUE_NAME = "create";
-  private static final String DELETE_QUEUE_NAME = "delete";
+  private static final String QUEUE_PREFIX = "registry";
+
+  private static final String CREATE_QUEUE_NAME = QUEUE_PREFIX + ".create";
+  private static final String DELETE_QUEUE_NAME = QUEUE_PREFIX + ".delete";
 
   private static final String EXCHANGE_NAME = "POOL";
 
@@ -68,8 +68,9 @@ public class MessageConfiguration {
   }
 
   @RabbitListener(queues = DELETE_QUEUE_NAME)
-  public void receiveDeleteMessage(Integer body){
+  public void receiveDeleteMessage(String body){
     log.info("Received DELETE event with body: {}", body);
+    dataPoolService.deleteDataPool(Integer.parseInt(body));
   }
 
   private static Optional<DataPool> deserializeMessage(String message) {

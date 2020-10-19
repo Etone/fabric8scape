@@ -1,7 +1,8 @@
 package info.novatec.fabric8scape.admin.service.impl;
 
 import info.novatec.fabric8scape.admin.entity.DataPool;
-import info.novatec.fabric8scape.admin.entity.RoutingKeys;
+import info.novatec.fabric8scape.admin.entity.ExchangeKey;
+import info.novatec.fabric8scape.admin.entity.RoutingKey;
 import info.novatec.fabric8scape.admin.exception.DataPoolNotFoundException;
 import info.novatec.fabric8scape.admin.repository.DataPoolRepository;
 import info.novatec.fabric8scape.admin.service.DataPoolService;
@@ -19,13 +20,13 @@ public class DataPoolServiceImpl implements DataPoolService {
 
   public DataPool createNewDataPool(DataPool newPool){
     var pool = repository.save(newPool);
-    messageService.sendMessage(RoutingKeys.CREATE.getValue(), pool);
+    messageService.sendMessage(ExchangeKey.POOL,RoutingKey.CREATE, pool);
     return pool;
   }
 
   public void deleteDataPool(int id) {
     repository.deleteById(id);
-    messageService.sendMessage(RoutingKeys.DELETE.getValue(), id);
+    messageService.sendMessage(ExchangeKey.POOL ,RoutingKey.DELETE, id);
   }
 
   public Iterable<DataPool> getDataPools(){
