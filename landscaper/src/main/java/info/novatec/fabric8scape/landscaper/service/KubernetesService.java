@@ -4,9 +4,8 @@ import info.novatec.fabric8scape.landscaper.entity.DataPool;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface DataPoolService {
+public interface KubernetesService {
 
-  void writeDataPool(DataPool pool);
-  void deleteDataPool(Integer id);
-  DataPool getDataPool(Integer id);
+  void deployDataPool(DataPool pool);
+  void undeployDataPool(DataPool pool);
 }

@@ -7,7 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RoutingKey {
     CREATE("pool.create"),
-    DELETE("pool.delete");
+    DELETE("pool.delete"),
+    DEPLOY("k8s.deploy"),
+    UNDEPLOY("k8s.undeploy");
 
-    String value;
+    private final String value;
 }
