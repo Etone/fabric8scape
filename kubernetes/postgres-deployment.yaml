@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric8-db
+  labels:
+    app: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: postgres
+        image: docker.io/gradescope/postgresql-multiple-databases
+        ports:
+        - name: psql
+          containerPort: 5432
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 2000m
+            cpu: 5000m
+          requests:
+              memory: 200m
+              cpu: 5m
+        env:
+        - name: POSTGRES_MULTIPLE_DATABASES
+          value: admin,landscaper,registry
+        - name: POSTGRES_USER
+          value: fabric8scape
+        - name: POSTGRES_PASSWORD
+          value: fabric8scape
