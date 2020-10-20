@@ -9,4 +9,8 @@ public class Image {
 
   String repository;
   String tag;
+
+  public String toString(){
+    return repository + ":" + tag;
+  }
 }
