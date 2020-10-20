@@ -26,5 +26,5 @@ spec:
                 memory: 200m
                 cpu: 500m
         env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: kubernetes
+        - name: SPRING_PROFILES_ACTIVE
+          value: kubernetes
