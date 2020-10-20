@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric8-registry
+  labels:
+    app: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+      - name: registry
+        image: etone/fabric8scape-registry:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        imagePullPolicy: Always
+        resources:
+              limits:
+                memory: 200m
+                cpu: 500m
+        env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kubernetes
