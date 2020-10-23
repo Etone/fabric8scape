@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
 @Slf4j
+@org.springframework.stereotype.Service
 public class KubernetesServiceImpl implements KubernetesService {
 
   public static final String LABEL_KEY_PARENT = "parent";
