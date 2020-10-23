@@ -33,7 +33,8 @@ public class DataPoolServiceImpl implements DataPoolService {
 
   @Override
   public Iterable<DataPool> filterByCreator(Iterable<Creator> creators) {
-    return repository.findByCreatorIn(creators);
+    var poolIds = kubernetes.getDeployDataPoolIds();
+    return repository.findAllByCreatorInAndId(creators, poolIds);
   }
 
   @Override
