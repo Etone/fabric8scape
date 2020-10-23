@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric8-landscaper
+  labels:
+    app: landscaper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: landscaper
+  template:
+    metadata:
+      labels:
+        app: landscaper
+    spec:
+      containers:
+      - name: landscaper
+        image: etone/fabric8scape-landscaper:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: kubernetes
+      serviceAccountName: landscaper-sa

@@ -1,45 +1,79 @@
 package info.novatec.fabric8scape.landscaper.service.impl;
 
 import info.novatec.fabric8scape.landscaper.entity.DataPool;
-import info.novatec.fabric8scape.landscaper.entity.Image;
 import info.novatec.fabric8scape.landscaper.service.KubernetesService;
+import io.fabric8.kubernetes.api.model.Service;
+import io.fabric8.kubernetes.api.model.ServiceBuilder;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import java.util.Map;
 import lombok.AllArgsConstructor;
-import org.hibernate.cfg.NotYetImplementedException;
+import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
+@Slf4j
+@org.springframework.stereotype.Service
 public class KubernetesServiceImpl implements KubernetesService {
+
+  public static final String LABEL_KEY_PARENT = "parent";
+  public static final String LABEL_VALUE_PARENT = "landscaper";
+  public static final String LABEL_KEY_ID = "id";
 
   private final KubernetesClient kubernetesClient;
 
   @Override
   public void deployDataPool(DataPool pool) {
+    log.info("Creating new Deployment for pool {}", pool);
     createDeployment(pool);
+
+    log.info("Creating new Service for pool {}", pool);
+    createService(pool);
+
+    log.info("Adding Ingress rule for pool {}", pool);
+    addIngressRule(pool);
   }
 
 
 
   @Override
   public void undeployDataPool(DataPool pool) {
-    throw new NotYetImplementedException();
+    log.info("Deleting Deployment for pool {}", pool);
+    deleteDeployment(pool);
 
+    log.info("Deleting Service for pool {}", pool);
+    deleteService(pool);
+
+    log.info("Removing Ingress rule for pool {}", pool);
+    deleteIngressRoute(pool);
   }
+
 
 
   private void createDeployment(DataPool pool) {
-    var deployment = getDeployment(pool);
+    var deployment = getNewDeployment(pool);
     kubernetesClient.apps().deployments().create(deployment);
   }
 
-  private Deployment getDeployment(DataPool pool) {
+  private void createService(DataPool pool) {
+    var service = getNewService(pool);
+    kubernetesClient.services().create(service);
+
+  }
+
+
+
+  private void addIngressRule(DataPool pool) {
+    // todo implement
+  }
+
+  private Deployment getNewDeployment(DataPool pool) {
     return new DeploymentBuilder()
 
         .withNewMetadata()
           .withName(getDeploymentName(pool))
           .addToLabels("id", pool.getId().toString())
-          .addToLabels("parent", "landscaper")
+          .addToLabels(LABEL_KEY_PARENT, LABEL_VALUE_PARENT)
         .endMetadata()
 
         .withNewSpec()
@@ -55,7 +89,49 @@ public class KubernetesServiceImpl implements KubernetesService {
         .build();
   }
 
+  private Service getNewService(DataPool pool) {
+    return new ServiceBuilder()
+
+        .withNewMetadata()
+          .withName("service-" + getDeploymentName(pool))
+        .endMetadata()
+
+        .withNewSpec()
+          .withType("ClusterIP")
+          .withSelector(Map.of(
+              LABEL_KEY_PARENT, LABEL_VALUE_PARENT,
+              LABEL_KEY_ID, pool.getId().toString()))
+          .addNewPort()
+            .withProtocol("TCP")
+            .withPort(8080)
+          .endPort()
+        .endSpec()
+
+        .build();
+  }
+
+  private void deleteDeployment(DataPool pool) {
+    kubernetesClient.apps()
+                    .deployments()
+                    .withLabel(LABEL_KEY_PARENT,LABEL_VALUE_PARENT)
+                    .withLabel(LABEL_KEY_ID, pool.getId().toString())
+                    .delete();
+  }
+
+  private void deleteService(DataPool pool) {
+    kubernetesClient.services()
+                    .withLabel(LABEL_KEY_PARENT, LABEL_VALUE_PARENT)
+                    .withLabel(LABEL_KEY_ID, pool.getId().toString())
+                    .delete();
+  }
+
+  private void deleteIngressRoute(DataPool pool) {
+    // Todo implement
+  }
+
   private String getDeploymentName(DataPool pool) {
     return "pool-" + pool.getId();
   }
+
+
 }

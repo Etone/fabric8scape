@@ -4,6 +4,7 @@ import info.novatec.fabric8scape.registry.entity.DataPool;
 import info.novatec.fabric8scape.registry.entity.type.Creator;
 import info.novatec.fabric8scape.registry.exception.DataPoolNotFoundException;
 import info.novatec.fabric8scape.registry.repository.DataPoolRepository;
+import info.novatec.fabric8scape.registry.repository.KubernetesRepository;
 import info.novatec.fabric8scape.registry.service.DataPoolService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class DataPoolServiceImpl implements DataPoolService {
 
   private final DataPoolRepository repository;
+  private final KubernetesRepository kubernetes;
 
   @Override
   public void writePoolInDataBase(DataPool pool) {
@@ -31,12 +33,19 @@ public class DataPoolServiceImpl implements DataPoolService {
 
   @Override
   public Iterable<DataPool> filterByCreator(Iterable<Creator> creators) {
-    return repository.findByCreatorIn(creators);
+    var poolIds = kubernetes.getDeployDataPoolIds();
+    return repository.findAllByCreatorInAndId(creators, poolIds);
   }
 
   @Override
   public void deleteDataPool(Integer id) {
     log.info("Delete Pool with id: {}" , id);
     repository.deleteById(id);
+  }
+
+  @Override
+  public Iterable<DataPool> getDeployedDataPools() {
+    var poolIds = kubernetes.getDeployDataPoolIds();
+    return repository.findAllById(poolIds);
   }
 }

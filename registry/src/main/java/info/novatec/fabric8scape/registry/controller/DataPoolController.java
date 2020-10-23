@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class DataPoolController {
 
-  private DataPoolService dataPoolService;
+  private final DataPoolService dataPoolService;
 
   @GetMapping("/{id}")
   public ResponseEntity<DataPool> getDataPoolById(@PathVariable("id") Integer id){
@@ -23,6 +23,12 @@ public class DataPoolController {
   @PostMapping()
   public ResponseEntity<Iterable<DataPool>> getDataPoolByCreator(@RequestBody Iterable<Creator> creator) {
     var pools = dataPoolService.filterByCreator(creator);
+    return ResponseEntity.ok(pools);
+  }
+
+  @GetMapping()
+  public ResponseEntity<Iterable<DataPool>> getDeployedPools(){
+    var pools = dataPoolService.getDeployedDataPools();
     return ResponseEntity.ok(pools);
   }
 
