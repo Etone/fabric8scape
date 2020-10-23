@@ -21,13 +21,6 @@ spec:
         - name: psql
           containerPort: 5432
         imagePullPolicy: Always
-        resources:
-          limits:
-            memory: 2000m
-            cpu: 5000m
-          requests:
-              memory: 200m
-              cpu: 5m
         env:
         - name: POSTGRES_MULTIPLE_DATABASES
           value: admin,landscaper,registry

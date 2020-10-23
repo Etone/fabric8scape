@@ -14,7 +14,7 @@ spec:
           service:
             name: admin-service
             port:
-              number: http
+              name: http
       - path: /registry
         pathType: Prefix
         backend:
