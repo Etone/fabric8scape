@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<testcontainers.version>1.14.3</testcontainers.version>
+		<fabric8.version>4.10.1</fabric8.version>
 	</properties>
 
 	<dependencies>
@@ -35,6 +36,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>kubernetes-client</artifactId>
+			<version>${fabric8.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>kubernetes-model</artifactId>
+			<version>${fabric8.version}</version>
 		</dependency>
 
 		<dependency>

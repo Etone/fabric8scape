@@ -11,4 +11,5 @@ public interface DataPoolService {
   DataPool findById(Integer id);
   Iterable<DataPool> filterByCreator(Iterable<Creator> creators);
   void deleteDataPool(Integer id);
+  Iterable<DataPool> getDeployedDataPools();
 }
