@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric8-messaging
+  labels:
+    app: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: postgres
+        image: rabbitmq:latest
+        ports:
+        - name: rabbit
+          containerPort: 5672
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 2000m
+            cpu: 5000m
+          requests:
+              memory: 200m
+              cpu: 5m
