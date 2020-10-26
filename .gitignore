@@ -18,3 +18,7 @@ target/
 ### VS Code ###
 .vscode/
 
+**.classpath
+**.factorypath
+**.project
+**.settings
