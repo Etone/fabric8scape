@@ -27,6 +27,7 @@ export default {
       async get() {
         const response = await this.$registryService.getDeployedPools();
         if (response.data) {
+          console.log(response.data);
           return response.data.map((item) => {
             return {
               id: item.id,

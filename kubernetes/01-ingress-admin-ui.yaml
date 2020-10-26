@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fabric8-ui-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /ui
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-ui-service
+            port:
+              number: 80

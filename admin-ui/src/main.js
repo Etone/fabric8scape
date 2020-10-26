@@ -3,8 +3,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
-import AdminService from './service/admin';
-import RegistryService from './service/registry';
+import AdminService from './service/adminService';
+import RegistryService from './service/registryService';
 import AsyncComputed from 'vue-async-computed'
 
 Vue.config.productionTip = false
