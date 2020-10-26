@@ -54,19 +54,44 @@ public class KubernetesServiceImpl implements KubernetesService {
 
   private void createDeployment(DataPool pool) {
     var deployment = getNewDeployment(pool);
-    kubernetesClient.apps().deployments().create(deployment);
+    kubernetesClient.apps().deployments().createOrReplace(deployment);
   }
 
   private void createService(DataPool pool) {
     var service = getNewService(pool);
-    kubernetesClient.services().create(service);
+    kubernetesClient.services().createOrReplace(service);
 
   }
 
 
 
   private void addIngressRule(DataPool pool) {
-    var ingress = getNewIngress(pool);
+    kubernetesClient.network().ingresses()
+                    .createOrReplaceWithNew()
+
+                    .withNewMetadata()
+                      .withName(getServiceName("ingress-", getDeploymentName(pool)))
+                      .addToAnnotations("nginx.ingress.kubernetes.io/rewrite-target", "/$2")
+                      .addToLabels(Map.of(
+                        LABEL_KEY_PARENT, LABEL_VALUE_PARENT,
+                        LABEL_KEY_ID, pool.getId().toString()))
+                    .endMetadata()
+
+                    .withNewSpec()
+                      .addNewRule()
+                        .withNewHttp()
+                          .addNewPath()
+                            .withNewPath(getServiceName("/", pool.getId().toString()) + "(/|$)(.*)")
+                            .withPathType("Prefix")
+                            .withNewBackend()
+                              .withNewServiceName(getServiceName("service-", getDeploymentName(pool)))
+                             .withNewServicePort(8080)
+                           .endBackend()
+                         .endPath()
+                       .endHttp()
+                      .endRule()
+                    .endSpec()
+                    .done();
   }
 
 
@@ -129,35 +154,6 @@ public class KubernetesServiceImpl implements KubernetesService {
 
   private String getServiceName(String resourcePrefix, String deploymentName) {
     return resourcePrefix + deploymentName;
-  }
-
-  private Ingress getNewIngress(DataPool pool) {
-    return new IngressBuilder()
-
-        .withNewMetadata()
-          .withName(getServiceName("ingress-", getDeploymentName(pool)))
-          .addToAnnotations("nginx.ingress.kubernetes.io/rewrite-target", "/$2")
-          .addToLabels(Map.of(
-              LABEL_KEY_PARENT, LABEL_VALUE_PARENT,
-              LABEL_KEY_ID, pool.getId().toString()))
-        .endMetadata()
-
-        .withNewSpec()
-          .addNewRule()
-            .withNewHttp()
-              .addNewPath()
-                .withNewPath(getServiceName("/", pool.getId().toString()) + "(/|$)(.*)")
-                .withPathType("Prefix")
-                .withNewBackend()
-                  .withNewServiceName(getServiceName("service-", getDeploymentName(pool)))
-                  .withNewServicePort(8080)
-                .endBackend()
-              .endPath()
-            .endHttp()
-          .endRule()
-        .endSpec()
-
-        .build();
   }
 
   private void deleteDeployment(DataPool pool) {
