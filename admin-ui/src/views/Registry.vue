@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <h1 class="text-h1">Admin</h1>
+    <h1 class="text-h1 header">Registry</h1>
+    <v-divider/>
   </div>
 </template>
 
@@ -8,5 +9,7 @@
 </script>
 
 <style scoped>
-
+  .header {
+    text-align: center;
+  }
 </style>
