@@ -136,7 +136,7 @@ public class KubernetesServiceImpl implements KubernetesService {
 
         .withNewMetadata()
           .withName(getServiceName("ingress-", getDeploymentName(pool)))
-          .addToAnnotations("nginx.ingress.kubernetes.io/rewrite-target", "/")
+          .addToAnnotations("nginx.ingress.kubernetes.io/rewrite-target", "/$2")
           .addToLabels(Map.of(
               LABEL_KEY_PARENT, LABEL_VALUE_PARENT,
               LABEL_KEY_ID, pool.getId().toString()))
@@ -146,7 +146,7 @@ public class KubernetesServiceImpl implements KubernetesService {
           .addNewRule()
             .withNewHttp()
               .addNewPath()
-                .withNewPath(getServiceName("/", pool.getId().toString()))
+                .withNewPath(getServiceName("/", pool.getId().toString()) + "(/|$)(.*)")
                 .withPathType("Prefix")
                 .withNewBackend()
                   .withNewServiceName(getServiceName("service-", getDeploymentName(pool)))
