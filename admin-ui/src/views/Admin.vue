@@ -44,8 +44,8 @@ export default {
       ],
     };
   },
-  asyncComputed: {
-    async items() {
+  computed: {
+    items: function () {
       // Request form Admin Backend Service
       // Format accordingly
       return [
