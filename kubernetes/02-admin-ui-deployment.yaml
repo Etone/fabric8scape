@@ -19,5 +19,5 @@ spec:
         image: etone/fabric8scape-admin-ui:latest
         ports:
         - name: http
-          containerPort: 8080
+          containerPort: 80
         imagePullPolicy: Always
