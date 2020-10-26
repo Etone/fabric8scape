@@ -6,6 +6,8 @@ import io.fabric8.kubernetes.api.model.Service;
 import io.fabric8.kubernetes.api.model.ServiceBuilder;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder;
+import io.fabric8.kubernetes.api.model.extensions.Ingress;
+import io.fabric8.kubernetes.api.model.extensions.IngressBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -64,8 +66,9 @@ public class KubernetesServiceImpl implements KubernetesService {
 
 
   private void addIngressRule(DataPool pool) {
-    // todo implement
+    var ingress = getNewIngress(pool);
   }
+
 
   private Deployment getNewDeployment(DataPool pool) {
     return new DeploymentBuilder()
@@ -107,7 +110,7 @@ public class KubernetesServiceImpl implements KubernetesService {
     return new ServiceBuilder()
 
         .withNewMetadata()
-          .withName("service-" + getDeploymentName(pool))
+          .withName(getServiceName("service-", getDeploymentName(pool)))
         .endMetadata()
 
         .withNewSpec()
@@ -119,6 +122,39 @@ public class KubernetesServiceImpl implements KubernetesService {
             .withProtocol("TCP")
             .withPort(8080)
           .endPort()
+        .endSpec()
+
+        .build();
+  }
+
+  private String getServiceName(String resourcePrefix, String deploymentName) {
+    return resourcePrefix + deploymentName;
+  }
+
+  private Ingress getNewIngress(DataPool pool) {
+    return new IngressBuilder()
+
+        .withNewMetadata()
+          .withName(getServiceName("ingress-", getDeploymentName(pool)))
+          .addToAnnotations("nginx.ingress.kubernetes.io/rewrite-target", "/")
+          .addToLabels(Map.of(
+              LABEL_KEY_PARENT, LABEL_VALUE_PARENT,
+              LABEL_KEY_ID, pool.getId().toString()))
+        .endMetadata()
+
+        .withNewSpec()
+          .addNewRule()
+            .withNewHttp()
+              .addNewPath()
+                .withNewPath(getServiceName("/", pool.getId().toString()))
+                .withPathType("Prefix")
+                .withNewBackend()
+                  .withNewServiceName(getServiceName("service-", getDeploymentName(pool)))
+                  .withNewServicePort(8080)
+                .endBackend()
+              .endPath()
+            .endHttp()
+          .endRule()
         .endSpec()
 
         .build();
@@ -140,7 +176,11 @@ public class KubernetesServiceImpl implements KubernetesService {
   }
 
   private void deleteIngressRoute(DataPool pool) {
-    // Todo implement
+    kubernetesClient.network()
+                    .ingresses()
+                    .withLabel(LABEL_KEY_PARENT, LABEL_VALUE_PARENT)
+                    .withLabel(LABEL_KEY_ID, pool.getId().toString())
+                    .delete();
   }
 
   private String getDeploymentName(DataPool pool) {
