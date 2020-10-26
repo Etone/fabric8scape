@@ -22,14 +22,15 @@ export default {
       ],
     };
   },
-  computed: {
-    items: function () {
-      return [
-        {
-          id: 12345,
-          creator: "Sys 12345",
-        },
-      ];
+  asyncComputed: {
+    async items() {
+      const response = await this.$registryService.getDeployedPools().then((response) => response.data);
+      return response.map((item) => {
+        return {
+          id: item.id,
+          creator: `${item.creator.system.toUpperCase()}-${item.creator.environment}.${item.creator.version}`,
+        }
+      });
     },
   },
 };
