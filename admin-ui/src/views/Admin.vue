@@ -4,7 +4,7 @@
     <v-divider />
 
     <v-data-table :headers="headers" :items="items" class="elevation-1">
-      <template v-slot:item.controls= "{ item }">
+      <template v-slot:item.controls="{ item }">
         <v-btn fab dark small color="grey" @click="deployPool(item.id)">
           <v-icon>fas fa-play</v-icon>
         </v-btn>
@@ -44,30 +44,36 @@ export default {
       ],
     };
   },
-  computed: {
-    items: function () {
-      // Request form Admin Backend Service
-      // Format accordingly
-      return [
-        {
-          image: "hello-world:latest",
-          creator: "TEST-Test.v1",
-          id: 12345,
-        },
-      ];
+  asyncComputed: {
+    items: {
+      async get() {
+        const response = await this.$adminService.getDataPools();
+        if (response.data) {
+          return response.data.map((item) => {
+            return {
+              id: item.id,
+              creator: `${item.creator.system.toUpperCase()}-
+              ${item.creator.environment}.${item.creator.version}`,
+            };
+          });
+        }
+      },
+      default() {
+        return [];
+      },
     },
   },
   methods: {
-    deployPool: function(id) {
+    deployPool: function (id) {
       console.log(id);
     },
-    undeployPool: function(id) {
+    undeployPool: function (id) {
       console.log(id);
     },
-    deletePool: function(id) {
+    deletePool: function (id) {
       console.log(id);
-    }
-  }
+    },
+  },
 };
 </script>
 

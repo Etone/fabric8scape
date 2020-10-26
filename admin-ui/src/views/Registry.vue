@@ -23,14 +23,23 @@ export default {
     };
   },
   asyncComputed: {
-    async items() {
-      const response = await this.$registryService.getDeployedPools().then((response) => response.data);
-      return response.map((item) => {
-        return {
-          id: item.id,
-          creator: `${item.creator.system.toUpperCase()}-${item.creator.environment}.${item.creator.version}`,
+    items: {
+      async get() {
+        const response = await this.$registryService.getDeployedPools();
+        if (response.data) {
+          return response.data.map((item) => {
+            return {
+              id: item.id,
+              creator: `${item.creator.system.toUpperCase()}-${
+                item.creator.environment
+              }.${item.creator.version}`,
+            };
+          });
         }
-      });
+      },
+      default() {
+        return [];
+      },
     },
   },
 };

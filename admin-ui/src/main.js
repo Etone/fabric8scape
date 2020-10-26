@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 Vue.prototype.$adminService = new AdminService();
 Vue.prototype.$registryService = new RegistryService();
 
-Vue.use(AsyncComputed)
+Vue.use(AsyncComputed);
 
 new Vue({
   router,
@@ -21,3 +21,4 @@ new Vue({
     iconfont: 'fa',
   }
 }).$mount('#app')
+
