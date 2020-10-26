@@ -26,7 +26,7 @@ public class DataPoolController {
     return dataPoolService.getDataPool(id);
   }
 
-  @PutMapping("/")
+  @PutMapping("")
   public DataPool createNewPool(@RequestBody DataPool newPool){
     log.info("PUT Request, creating new DataPool {}", newPool);
     return dataPoolService.createNewDataPool(newPool);
