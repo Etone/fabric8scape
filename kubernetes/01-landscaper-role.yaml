@@ -4,5 +4,5 @@ metadata:
   name: landscaper-role
 rules:
 - apiGroups: ["*", "networking.k8s.io"]
-  resources: ["deployments","services", "ingress"]
-  verbs: ["get","list","create","delete","patch"]
+  resources: ["deployments","services", "ingresses"]
+  verbs: ["get","list","create","delete","patch", "update"]
