@@ -77,10 +77,23 @@ public class KubernetesServiceImpl implements KubernetesService {
         .endMetadata()
 
         .withNewSpec()
+          .withNewSelector()
+            .addToMatchLabels(LABEL_KEY_ID, pool.getId().toString())
+            .addToMatchLabels(LABEL_KEY_PARENT, LABEL_VALUE_PARENT)
+          .endSelector()
           .withNewTemplate()
+            .withNewMetadata()
+              .withLabels(Map.of(
+                  LABEL_KEY_PARENT, LABEL_VALUE_PARENT,
+                  LABEL_KEY_ID, pool.getId().toString()))
+            .endMetadata()
             .withNewSpec()
               .addNewContainer()
                 .withNewImage(pool.getImage().toString())
+                .addNewPort()
+                  .withContainerPort(8080)
+                  .withName("http")
+                .endPort()
               .endContainer()
             .endSpec()
           .endTemplate()
