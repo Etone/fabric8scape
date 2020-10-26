@@ -8,5 +8,5 @@ public interface DataPoolRepository extends CrudRepository<DataPool, Integer> {
 
   Iterable<DataPool> findByCreator(Creator creator);
   Iterable<DataPool> findByCreatorIn(Iterable<Creator> creators);
-  Iterable<DataPool> findAllByCreatorInAndId(Iterable<Creator> creators, Iterable<Integer> ids);
+  Iterable<DataPool> findAllByCreatorInAndIdIn(Iterable<Creator> creators, Iterable<Integer> ids);
 }
