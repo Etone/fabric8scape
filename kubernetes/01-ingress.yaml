@@ -26,6 +26,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: registry-service
+            name: admin-ui-service
             port:
-              number: 80
+              number: 8080
