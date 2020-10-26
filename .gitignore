@@ -18,6 +18,10 @@ target/
 ### VS Code ###
 .vscode/
 
+**.classpath
+**.factorypath
+**.project
+**.settings
 .DS_Store
 node_modules
 /dist
