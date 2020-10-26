@@ -89,6 +89,7 @@ public class KubernetesServiceImpl implements KubernetesService {
             .endMetadata()
             .withNewSpec()
               .addNewContainer()
+                .withName("container")
                 .withNewImage(pool.getImage().toString())
                 .addNewPort()
                   .withContainerPort(8080)
