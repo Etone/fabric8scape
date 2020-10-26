@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "079e9de5-5f27-4dac-962f-c49d03791c2e",
+		"name": "fabric8scape",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "GetPools",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/datapool/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"datapool",
+								""
+							]
+						},
+						"description": "Get all Pools in Database"
+					},
+					"response": []
+				},
+				{
+					"name": "GetPool",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/datapool/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"datapool",
+								"6"
+							]
+						},
+						"description": "Get single Pool by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "DeployPool",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/kubernetes/deploy/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"kubernetes",
+								"deploy",
+								"6"
+							]
+						},
+						"description": "Get single Pool by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "UnDeployPool",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/kubernetes/undeploy/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"kubernetes",
+								"undeploy",
+								"6"
+							]
+						},
+						"description": "Get single Pool by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePool",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/datapool/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"datapool",
+								"1"
+							]
+						},
+						"description": "Delete Pool by id from Database"
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePool",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"creator\": {\n        \"system\": \"Test\",\n        \"environment\": \"Test\",\n        \"version\": \"Test\"\n    },\n    \"image\": {\n        \"repository\" : \"gazgeek/springboot-helloworld\",\n        \"tag\" : \"latest\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/datapool/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"datapool",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Registry",
+			"item": [
+				{
+					"name": "GetPoolById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/registry/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"registry",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDeployed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/registry",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"registry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDeployedFiltered",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"creator\": [\n        {\n            \"environment\": \"Test\",\n            \"system\": \"Test\",\n            \"version\": \"Test\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/registry",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"registry"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
