@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric8-admin-ui
+  labels:
+    app: admin-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-ui
+  template:
+    metadata:
+      labels:
+        app: admin-ui
+    spec:
+      containers:
+      - name: admin
+        image: etone/fabric8scape-admin-ui:latest
+        ports:
+        - name: http
+          containerPort: 80
+        imagePullPolicy: Always
