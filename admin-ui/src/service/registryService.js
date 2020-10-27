@@ -5,10 +5,10 @@ const { default: axios } = require("axios");
 export default class RegistryService {
     
     getDeployedPools() {
-        return axios.get(`${this.getRegistryUrl()}/datapool`);
+        return axios.get(`${this.getRegistryUrl()}`);
     }
 
     getRegistryUrl() {
-        return `${window.location.host}/registry`
+        return `http://${window.location.host}/registry`
     }
 }

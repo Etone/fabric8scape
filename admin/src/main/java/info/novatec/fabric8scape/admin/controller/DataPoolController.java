@@ -7,14 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/datapool")
+@RequestMapping("/admin/datapool")
 @AllArgsConstructor
 @Slf4j
 public class DataPoolController {
 
   DataPoolService dataPoolService;
 
-  @GetMapping("/")
+  @GetMapping("")
   public Iterable<DataPool> getDataPools() {
     log.info("GET Request, listing all DataPools in Database");
     return dataPoolService.getDataPools();
