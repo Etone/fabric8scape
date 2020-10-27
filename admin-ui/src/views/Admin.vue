@@ -52,6 +52,7 @@ export default {
           return response.data.map((item) => {
             return {
               id: item.id,
+              image: `${item.image.repository}:${item.image.tag}`,
               creator: `${item.creator.system.toUpperCase()}-
               ${item.creator.environment}.${item.creator.version}`,
             };
