@@ -9,6 +9,6 @@ export default class RegistryService {
     }
 
     getRegistryUrl() {
-        return `${window.location.host}/registry`
+        return `http://${window.location.host}/registry`
     }
 }

@@ -9,6 +9,6 @@ export default class AdminService {
     }
 
     getAdminUrl() {
-        return `${window.location.host}/admin`
+        return `http://${window.location.host}/admin`
     }
 }

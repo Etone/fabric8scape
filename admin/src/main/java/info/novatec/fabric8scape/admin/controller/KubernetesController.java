@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/kubernetes")
+@RequestMapping("/admin/kubernetes")
 public class KubernetesController {
 
   private final KubernetesService kubernetesService;

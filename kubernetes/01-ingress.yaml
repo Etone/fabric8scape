@@ -2,23 +2,28 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: fabric8-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
   - http:
       paths:
-      - path: /admin(/|$)(.*)
+      - path: /admin
         pathType: Prefix
         backend:
           service:
             name: admin-service
             port:
               number: 8080
-      - path: /registry(/|$)(.*)
+      - path: /registry
         pathType: Prefix
         backend:
           service:
             name: registry-service
             port:
               number: 8080
+      - path: /ui
+        pathType: Prefix
+        backend:
+          service:
+            name: admin-ui-service
+            port:
+              number: 80
