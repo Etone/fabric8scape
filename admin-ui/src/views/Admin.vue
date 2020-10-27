@@ -64,14 +64,17 @@ export default {
     },
   },
   methods: {
-    deployPool: function (id) {
-      console.log(id);
+    deployPool: async function (id) {
+      await this.$adminService.deployDataPool(id);
     },
-    undeployPool: function (id) {
-      console.log(id);
+    undeployPool: async function (id) {
+      await this.$adminService.undeployDataPool(id);
     },
-    deletePool: function (id) {
-      console.log(id);
+    deletePool: async function (id) {
+      await this.$adminService.deleteDataPool(id);
+    },
+    createPool: async function(pool) {
+      await this.$adminService.createDataPool(pool);
     },
   },
 };
