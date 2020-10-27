@@ -41,8 +41,6 @@ public class MessageListener {
     log.info("Received DEPLOY event for id: {}", id);
     var dataPool = dataPoolService.getDataPool(Integer.parseInt(id));
     kubernetesService.deployDataPool(dataPool);
-
-
   }
 
   @RabbitListener(queues = { "landscaper.undeploy" })

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pool-123
+  labels:
+    parent: landscaper
+    id: "123"
+spec:
+  selector:
+    matchLabels:
+      parent: landscaper
+      id: "123"
+  template:
+    metadata:
+      labels:
+        parent: landscaper
+        id: "123"
+    spec:
+      containers:
+      - name: conatiner
+        image: repository/image:tag
+        ports:
+        - name: http
+          containerPort: 8080
