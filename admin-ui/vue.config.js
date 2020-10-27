@@ -2,5 +2,6 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-  publicPath: "/ui"
+  publicPath: "/ui",
+  assetsDir: "ui"
 }
