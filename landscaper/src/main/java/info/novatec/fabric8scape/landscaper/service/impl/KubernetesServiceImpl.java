@@ -134,6 +134,9 @@ public class KubernetesServiceImpl implements KubernetesService {
 
         .withNewMetadata()
           .withName(getServiceName("service-", getDeploymentName(pool)))
+          .addToLabels(Map.of(
+              LABEL_KEY_PARENT, LABEL_VALUE_PARENT,
+              LABEL_KEY_ID, pool.getId().toString()))
         .endMetadata()
 
         .withNewSpec()
