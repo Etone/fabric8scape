@@ -43,7 +43,7 @@ export default {
               creator: `${item.creator.system.toUpperCase()}-${
                 item.creator.environment
               }.${item.creator.version}`,
-              link: `${window.location.host}/${item.id}`
+              link: `http://${window.location.host}/${item.id}`
             };
           });
         }
