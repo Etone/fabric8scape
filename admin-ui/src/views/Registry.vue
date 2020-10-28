@@ -2,7 +2,11 @@
   <div class="home">
     <h1 class="text-h1 header">Registry</h1>
     <v-divider />
-    <v-data-table :headers="headers" :items="items" class="elevation-1" />
+    <v-data-table :headers="headers" :items="items" class="elevation-1" >
+      <template v-slot:item.link="{ item }">
+        <a :href="item.link">Link</a>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -19,6 +23,11 @@ export default {
           text: "Creator",
           value: "creator",
         },
+        {
+          text: "",
+          value: "link",
+          sortable: false,
+        },
       ],
     };
   },
@@ -34,6 +43,7 @@ export default {
               creator: `${item.creator.system.toUpperCase()}-${
                 item.creator.environment
               }.${item.creator.version}`,
+              link: `${window.location.host}/${item.id}`
             };
           });
         }
