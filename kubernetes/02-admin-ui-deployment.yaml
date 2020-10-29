@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: admin
-        image: etone/fabric8scape-admin-ui:latest
+        image: etone/fabric8scape-admin-ui:r1
         ports:
         - name: http
           containerPort: 80
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent

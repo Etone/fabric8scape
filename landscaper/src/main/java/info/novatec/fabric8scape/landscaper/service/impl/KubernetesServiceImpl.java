@@ -58,7 +58,6 @@ public class KubernetesServiceImpl implements KubernetesService {
   private void createService(DataPool pool) {
     var service = getNewService(pool);
     kubernetesClient.services().createOrReplace(service);
-
   }
 
 

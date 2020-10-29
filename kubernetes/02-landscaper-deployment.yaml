@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
       - name: landscaper
-        image: etone/fabric8scape-landscaper:latest
+        image: etone/fabric8scape-landscaper:r1
         ports:
         - containerPort: 8080
           name: http
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes

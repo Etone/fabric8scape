@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
       - name: admin
-        image: etone/fabric8scape-admin:latest
+        image: etone/fabric8scape-admin:r1
         ports:
         - name: http
           containerPort: 8080
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
